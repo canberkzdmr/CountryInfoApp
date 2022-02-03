@@ -38,11 +38,6 @@ data class CountryName(
     val name: String?
 )
 
-/*data class CountryCurrencies(
-    @SerializedName("PGK")
-    val currencySubObject: CountryCurrencySub
-)*/
-
 data class CountryCurrencies(
     @SerializedName("name")
     val currencyName: String?

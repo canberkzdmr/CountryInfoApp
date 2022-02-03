@@ -45,7 +45,6 @@ class Converters {
         return Gson().fromJson(value, mapType)
     }
 
-
     //CountryLanguage
     @TypeConverter
     fun fromCountryLanguage(countryLanguage: CountryLanguages): String {
