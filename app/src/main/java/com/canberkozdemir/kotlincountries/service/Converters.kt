@@ -4,10 +4,7 @@ import androidx.room.TypeConverter
 import com.canberkozdemir.kotlincountries.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.*
+import org.json.JSONObject
 
 class Converters {
     /**
@@ -34,8 +31,9 @@ class Converters {
     }
 
     @TypeConverter
-    fun toCountryCapital(countryCapital: String) =
-        Json.decodeFromString<List<String>>(countryCapital)
+    fun toCountryCapital(countryCapital: String): List<String> {
+        return listOf(countryCapital)
+    }
 
     //CountryCurrency
     @TypeConverter
@@ -48,15 +46,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun toCountryCurrency(value: String): Map<String, CountryCurrencies> {
-        val mapType = object : TypeToken<Map<String, CountryCurrencies>>() {}.type
-        return Gson().fromJson(value, mapType)
-    }
+    fun toCountryCurrency(value: String): Map<String, CountryCurrencies> =
+        Gson().fromJson(value, object : TypeToken<Map<String, CountryCurrencies>>() {}.type)
 
     //CountryLanguage
     @TypeConverter
     fun fromCountryLanguage(countryLanguage: Map<String, String>): String {
-        return if(!countryLanguage.values.isNullOrEmpty())
+        return if (!countryLanguage.values.isNullOrEmpty())
             countryLanguage.values.toList()[0]
         else
             ""
