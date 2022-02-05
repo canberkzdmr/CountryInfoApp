@@ -18,6 +18,7 @@ class Converters {
     fun fromCountryName(countryName: CountryName): String {
         return countryName.name.toString()
     }
+
     @TypeConverter
     fun toCountryName(countryName: String): CountryName {
         return CountryName(countryName)
@@ -25,7 +26,13 @@ class Converters {
 
     //CountryCapital
     @TypeConverter
-    fun fromCountryCapital(countryCapital: List<String>) = Json.encodeToString(countryCapital)
+    fun fromCountryCapital(countryCapital: List<String>): String {
+        return if (!countryCapital.isNullOrEmpty())
+            countryCapital[0]
+        else
+            ""
+    }
+
     @TypeConverter
     fun toCountryCapital(countryCapital: String) =
         Json.decodeFromString<List<String>>(countryCapital)
@@ -36,9 +43,10 @@ class Converters {
         return if (!map.values.isEmpty()) {
             map.values.toList()[0].currencyName.toString()
         } else {
-            "There is no currency info retrieved from the service!"
+            ""
         }
     }
+
     @TypeConverter
     fun toCountryCurrency(value: String): Map<String, CountryCurrencies> {
         val mapType = object : TypeToken<Map<String, CountryCurrencies>>() {}.type
@@ -47,12 +55,17 @@ class Converters {
 
     //CountryLanguage
     @TypeConverter
-    fun fromCountryLanguage(countryLanguage: CountryLanguages): String {
-        return countryLanguage.eng.toString()
+    fun fromCountryLanguage(countryLanguage: Map<String, String>): String {
+        return if(!countryLanguage.values.isNullOrEmpty())
+            countryLanguage.values.toList()[0]
+        else
+            ""
     }
+
     @TypeConverter
-    fun toCountryLanguage(countryLanguage: String): CountryLanguages {
-        return CountryLanguages(countryLanguage)
+    fun toCountryLanguage(countryLanguage: String): Map<String, String> {
+        val mapType = object : TypeToken<Map<String, String>>() {}.type
+        return Gson().fromJson(countryLanguage, mapType)
     }
 
     //CountryFlag
@@ -60,6 +73,7 @@ class Converters {
     fun fromCountryFlag(countryFlag: CountryFlag): String {
         return countryFlag.countryFlagPng.toString()
     }
+
     @TypeConverter
     fun toCountryFlag(countryFlag: String): CountryFlag {
         return CountryFlag(countryFlag)

@@ -35,7 +35,6 @@ class CountryAdapter(val countryList: ArrayList<Country>) :
         }
 
         holder.view.setOnClickListener {
-//            val action = FeedFragmentDirections.actionFeedFragmentToDetailFragment()
             val action = FeedFragmentDirections.actionFeedFragmentToDetailFragment()
             Navigation.findNavController(it).navigate(action)
         }

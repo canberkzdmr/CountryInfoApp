@@ -21,7 +21,7 @@ data class Country(
     val countryRegion: String?,
     @ColumnInfo(name = "language")
     @SerializedName("languages")
-    val countryLanguage: CountryLanguages,
+    val countryLanguage: Map<String, String>,
     @ColumnInfo(name = "timezone")
     @SerializedName("timezones")
     val countryTimeZone: List<String>?,
@@ -41,16 +41,6 @@ data class CountryName(
 data class CountryCurrencies(
     @SerializedName("name")
     val currencyName: String?
-)
-
-data class CountryCurrencySub(
-    @SerializedName("name")
-    val currencyName: String?
-)
-
-data class CountryLanguages(
-    @SerializedName("eng")
-    val eng: String?
 )
 
 data class CountryFlag(

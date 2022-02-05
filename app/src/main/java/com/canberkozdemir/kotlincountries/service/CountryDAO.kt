@@ -17,12 +17,12 @@ interface CountryDAO {
     @Insert
     suspend fun insertAll(vararg countries: Country) : List<Long>
 
-    @Query("SELECT * FROM country")
+    @Query("SELECT * FROM Country")
     suspend fun getAllCountries() : List<Country>
 
-    @Query("SELECT * FROM country WHERE uuid = :countryId")
+    @Query("SELECT * FROM Country WHERE uuid = :countryId")
     suspend fun getCountry(countryId : Int) : Country
 
-    @Query("DELETE FROM country")
+    @Query("DELETE FROM Country")
     suspend fun deleteAllCountries()
 }
