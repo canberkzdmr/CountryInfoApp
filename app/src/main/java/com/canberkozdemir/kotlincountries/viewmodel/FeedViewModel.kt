@@ -32,6 +32,7 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun getDataFromSQLite() {
+        countryLoadingProgress.value = true
         launch {
             val countries = CountryDatabase(getApplication()).countryDao().getAllCountries()
             showCountries(countries)
@@ -39,9 +40,12 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    fun refreshDataFromAPI() {
+        getDataFromAPI()
+    }
+
     private fun getDataFromAPI() {
         countryLoadingProgress.value = true
-
         disposable.add(
             countryAPIService.getData()
                 .subscribeOn(Schedulers.newThread())
@@ -82,6 +86,14 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
         }
 
         customPrefences.saveTime(System.nanoTime())
+    }
+
+    /**
+     * hafizayi verimli kullanmak icin temizlemek gerekiyor
+     */
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 
 }

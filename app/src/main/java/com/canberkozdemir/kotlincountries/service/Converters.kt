@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import com.canberkozdemir.kotlincountries.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.json.JSONObject
 
 class Converters {
     /**
@@ -46,8 +45,10 @@ class Converters {
     }
 
     @TypeConverter
-    fun toCountryCurrency(value: String): Map<String, CountryCurrencies> =
-        Gson().fromJson(value, object : TypeToken<Map<String, CountryCurrencies>>() {}.type)
+    fun toCountryCurrency(value: String): Map<String, CountryCurrencies> {
+        return mapOf("currency" to CountryCurrencies(value))
+    }
+        //Gson().fromJson(value, object : TypeToken<Map<String, CountryCurrencies>>() {}.type)
 
     //CountryLanguage
     @TypeConverter
@@ -60,8 +61,9 @@ class Converters {
 
     @TypeConverter
     fun toCountryLanguage(countryLanguage: String): Map<String, String> {
-        val mapType = object : TypeToken<Map<String, String>>() {}.type
-        return Gson().fromJson(countryLanguage, mapType)
+//        val mapType = object : TypeToken<Map<String, String>>() {}.type
+//        return Gson().fromJson(countryLanguage, mapType)
+        return mapOf("language" to countryLanguage)
     }
 
     //CountryFlag

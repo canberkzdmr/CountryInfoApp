@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.canberkozdemir.kotlincountries.R
 import com.canberkozdemir.kotlincountries.adapter.CountryAdapter
@@ -42,19 +41,11 @@ class FeedFragment : Fragment() {
         countryList.layoutManager = LinearLayoutManager(context)
         countryList.adapter = countryAdapter
 
-
-        /*btnFeed.setOnClickListener {
-
-            val action = FeedFragmentDirections.actionFeedFragmentToDetailFragment()
-            Navigation.findNavController(it).navigate(action)
-
-        }*/
-
         swipeRefreshLayout.setOnRefreshListener {
             countryList.visibility = View.GONE
             tvCountryError.visibility = View.GONE
             countryLoading.visibility = View.VISIBLE
-            viewModel.refreshData()
+            viewModel.refreshDataFromAPI()
             swipeRefreshLayout.isRefreshing = false
         }
 
