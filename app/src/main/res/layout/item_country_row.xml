@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="country"
+            type="com.canberkozdemir.kotlincountries.model.Country" />
+        <variable
+            name="listener"
+            type="com.canberkozdemir.kotlincountries.adapter.ICountryClickListener" />
+    </data>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:onClick="@{listener::onCountryClicked}">
+
+        <TextView
+            android:id="@+id/tvUuid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@{String.valueOf(country.uuid)}"/>
 
         <ImageView
             android:id="@+id/ivCountry"
@@ -12,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="3dp"
-            android:src="@mipmap/ic_launcher_round"/>
+            android:downloadUrl="@{country.countryFlagUrl.countryFlagPng}"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -25,7 +42,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="@{country.countryName.name}"
                 android:padding="5dp"
                 android:textSize="20sp"
                 android:textStyle="bold">
@@ -38,12 +55,9 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="16sp"
-                android:text="Capital">
-
+                android:text="@{country.countryCapital[0]}">
 
             </TextView>
-
         </LinearLayout>
-
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

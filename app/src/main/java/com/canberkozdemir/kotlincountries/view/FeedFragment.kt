@@ -19,11 +19,6 @@ class FeedFragment : Fragment() {
     private lateinit var viewModel: FeedViewModel
     private val countryAdapter = CountryAdapter(arrayListOf())
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,14 +48,14 @@ class FeedFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        viewModel.countries.observe(viewLifecycleOwner, Observer { countries ->
+        viewModel.countries.observe(viewLifecycleOwner, { countries ->
             countries?.let {
                 countryList.visibility = View.VISIBLE
                 countryAdapter.updateCountryList(countries)
             }
         })
 
-        viewModel.countryError.observe(viewLifecycleOwner, Observer { error ->
+        viewModel.countryError.observe(viewLifecycleOwner, { error ->
             error?.let {
                 if (it) {
                     tvCountryError.visibility = View.VISIBLE
@@ -82,5 +77,4 @@ class FeedFragment : Fragment() {
             }
         })
     }
-
 }
